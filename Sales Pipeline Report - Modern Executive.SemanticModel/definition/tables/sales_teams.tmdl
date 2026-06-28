@@ -1,0 +1,42 @@
+table sales_teams
+	lineageTag: cc67ab9c-35c3-413f-b4fc-7d1813954a55
+
+	column sales_agent
+		dataType: string
+		lineageTag: 1f387f08-c7f6-4573-ae71-f7c7132a8560
+		summarizeBy: none
+		sourceColumn: sales_agent
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager
+		dataType: string
+		lineageTag: b5f49d03-af72-44ab-b50a-6b855aca19fc
+		summarizeBy: none
+		sourceColumn: manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional_office
+		dataType: string
+		lineageTag: 08fabf60-684f-429a-a1d8-099b3bb96549
+		summarizeBy: none
+		sourceColumn: regional_office
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales_teams = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\jos_m\Desktop\mavenCRM\sales_teams.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"sales_agent", type text}, {"manager", type text}, {"regional_office", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

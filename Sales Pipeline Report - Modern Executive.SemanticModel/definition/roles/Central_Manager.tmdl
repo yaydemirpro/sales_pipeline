@@ -1,0 +1,7 @@
+role Central_Manager
+	modelPermission: read
+
+	tablePermission sales_teams = [regional_office] == "Central"
+
+	annotation PBI_Id = b7b0b446c0ee46dcb90ab042fa6596b7
+

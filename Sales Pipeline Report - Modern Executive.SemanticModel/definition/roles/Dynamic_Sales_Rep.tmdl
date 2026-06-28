@@ -1,0 +1,12 @@
+role Dynamic_Sales_Rep
+	modelPermission: read
+
+	tablePermission sales_teams =
+			[sales_agent] = LOOKUPVALUE(
+			    dim_user_security[sales_agent],
+			    dim_user_security[UserEmail],
+			    USERPRINCIPALNAME()
+			)
+
+	annotation PBI_Id = 71638ae14d6648c5b920378e14713524
+

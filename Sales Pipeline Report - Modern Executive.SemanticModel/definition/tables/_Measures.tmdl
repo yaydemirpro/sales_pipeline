@@ -1,0 +1,88 @@
+table _Measures
+	lineageTag: 805a0048-8317-4f1c-a049-066268c9a285
+
+	measure 'Total Pipeline Value' = SUM(sales_pipeline[close_value])
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 2107edd2-c48a-4238-9e69-127fcdffde01
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Average Deal Size' = AVERAGE(sales_pipeline[close_value])
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: b331f4ff-8fcc-414b-bbce-dd4ae6baf398
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Win Rate' =
+			
+			VAR WonDeals = CALCULATE(COUNTROWS(sales_pipeline), sales_pipeline[deal_stage] = "Won")
+			VAR ClosedDeals = CALCULATE(COUNTROWS(sales_pipeline), sales_pipeline[deal_stage] IN {"Won", "Lost"})
+			RETURN
+			DIVIDE(WonDeals, ClosedDeals, 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 957c6137-cd4a-4583-94c0-5939663d80e0
+
+	measure 'Conversion Rate' =
+			
+			VAR WonDeals = CALCULATE(COUNTROWS(sales_pipeline), sales_pipeline[deal_stage] = "Won")
+			VAR TotalDeals = COUNTROWS(sales_pipeline)
+			RETURN
+			DIVIDE(WonDeals, TotalDeals, 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2c00f131-9618-4d9f-bd54-7c91d5affe45
+
+	measure 'Sales Cycle Length' =
+			
+			AVERAGEX(
+			    FILTER(sales_pipeline, NOT(ISBLANK(sales_pipeline[close_date]))),
+			    DATEDIFF(sales_pipeline[engage_date], sales_pipeline[close_date], DAY)
+			)
+		lineageTag: 4e4940dc-1d74-4417-a011-4dcf2b45a28e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YTD Pipeline Value' = ```
+			
+			CALCULATE(
+			    [Total Pipeline Value], 
+			    DATESYTD(dim_date[Date])
+			)
+			```
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: e74973e7-1016-41cd-882c-e57c1e0e11a5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Previous Year Pipeline Value' = ```
+			
+			CALCULATE(
+			    [Total Pipeline Value], 
+			    SAMEPERIODLASTYEAR(dim_date[Date])
+			)
+			```
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 453e84b8-16a2-40d0-ae5f-107135fa8667
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'YoY Growth %' =
+			
+			VAR CurrentValue = [Total Pipeline Value]
+			VAR PreviousValue = [Previous Year Pipeline Value]
+			RETURN
+			DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5b108636-df14-466a-8a8e-6ec76cd934ec
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

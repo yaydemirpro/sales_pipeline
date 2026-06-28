@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["accounts","products","sales_pipeline","sales_teams","_Measures","dim_user_security"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table accounts
+ref table products
+ref table sales_pipeline
+ref table sales_teams
+ref table dim_date
+ref table _Measures
+ref table dim_user_security
+
+ref role Central_Manager
+ref role Dynamic_Sales_Rep
+
+ref cultureInfo en-US
+

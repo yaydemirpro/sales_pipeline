@@ -1,0 +1,80 @@
+table accounts
+	lineageTag: eb934839-71fc-44e0-ac34-412b9523d7a2
+
+	column account
+		dataType: string
+		lineageTag: 5b2dde36-c478-4448-950f-06bfa7d1d7e9
+		summarizeBy: none
+		sourceColumn: account
+
+		annotation SummarizationSetBy = Automatic
+
+	column sector
+		dataType: string
+		lineageTag: f0497813-3d12-4ce6-8a66-9c5d800c3686
+		summarizeBy: none
+		sourceColumn: sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_established
+		dataType: int64
+		formatString: 0
+		lineageTag: 9108ea22-81c4-4b71-8226-51c970825611
+		summarizeBy: none
+		sourceColumn: year_established
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: decimal
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 111ecad0-ab9a-48ea-9021-1248c7de7759
+		summarizeBy: none
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column employees
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ff6f09c-6762-4648-be50-3544ad36ce8b
+		summarizeBy: none
+		sourceColumn: employees
+
+		annotation SummarizationSetBy = Automatic
+
+	column office_location
+		dataType: string
+		lineageTag: f8fa5d82-36c8-4478-badb-c3d6b0aa1898
+		summarizeBy: none
+		sourceColumn: office_location
+
+		annotation SummarizationSetBy = Automatic
+
+	column subsidiary_of
+		dataType: string
+		lineageTag: f7042ee7-9ba6-407e-922e-b24cdcb57bda
+		summarizeBy: none
+		sourceColumn: subsidiary_of
+
+		annotation SummarizationSetBy = Automatic
+
+	partition accounts = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\jos_m\Desktop\mavenCRM\accounts.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"account", type text}, {"sector", type text}, {"year_established", Int64.Type}, {"revenue", type number}, {"employees", Int64.Type}, {"office_location", type text}, {"subsidiary_of", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","technolgy","technology",Replacer.ReplaceText,{"sector"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"revenue", Currency.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

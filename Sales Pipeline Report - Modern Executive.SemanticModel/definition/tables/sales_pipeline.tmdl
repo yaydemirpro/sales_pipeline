@@ -1,0 +1,99 @@
+table sales_pipeline
+	lineageTag: e1b2d26a-8189-4cbf-96f0-44d294f264a3
+
+	column opportunity_id
+		dataType: string
+		lineageTag: e2057724-48cb-4afb-ba19-b8f60f48ef12
+		summarizeBy: none
+		sourceColumn: opportunity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_agent
+		dataType: string
+		isHidden
+		lineageTag: 97b286df-0426-4524-90a8-3cc9fbff940b
+		summarizeBy: none
+		sourceColumn: sales_agent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product
+		dataType: string
+		isHidden
+		lineageTag: 305c211e-fa9f-493a-9157-8f496682f7a3
+		summarizeBy: none
+		sourceColumn: product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column account
+		dataType: string
+		isHidden
+		lineageTag: 079b576a-2560-43fa-9fb9-09a6570873f4
+		summarizeBy: none
+		sourceColumn: account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column deal_stage
+		dataType: string
+		lineageTag: 140fdc8c-2eaa-410b-828b-5db9eda7dcbe
+		summarizeBy: none
+		sourceColumn: deal_stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column engage_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 527492ed-db57-451c-b22f-dabbfd9563db
+		summarizeBy: none
+		sourceColumn: engage_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column close_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2614a852-9ce9-445c-b346-ec92c1db1502
+		summarizeBy: none
+		sourceColumn: close_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column close_value
+		dataType: decimal
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 80c6710a-e957-489b-9ad6-85d8b951e8ce
+		summarizeBy: sum
+		sourceColumn: close_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	partition sales_pipeline = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\jos_m\Desktop\mavenCRM\sales_pipeline.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"opportunity_id", type text}, {"sales_agent", type text}, {"product", type text}, {"account", type text}, {"deal_stage", type text}, {"engage_date", type date}, {"close_date", type date}, {"close_value", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

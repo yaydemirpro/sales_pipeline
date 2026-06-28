@@ -1,0 +1,27 @@
+relationship AutoDetected_81ecf723-4609-4c5c-981d-7b02bdd25f4e
+	fromColumn: sales_pipeline.product
+	toColumn: products.product
+
+relationship 13f2431a-116f-0752-1f7d-b0c41babb19e
+	fromColumn: sales_pipeline.account
+	toColumn: accounts.account
+
+relationship 6582af26-34e6-b4e9-a22e-5b93988bd9a5
+	fromColumn: sales_pipeline.sales_agent
+	toColumn: sales_teams.sales_agent
+
+relationship 00609d92-273e-f202-adc4-1dc3546fbfb4
+	fromColumn: sales_pipeline.engage_date
+	toColumn: dim_date.Date
+
+relationship fa888c0d-2c73-5d89-4d9e-df6c58fe0cd6
+	isActive: false
+	fromColumn: sales_pipeline.close_date
+	toColumn: dim_date.Date
+
+relationship AutoDetected_7a4e840c-f1f3-45bf-ab52-54664ae69ca0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dim_user_security.sales_agent
+	toColumn: sales_teams.sales_agent
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sales Pipeline Report - Modern Executive"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "51bfcca1-b354-4529-b466-9b24dc4cabb7"
+  }
+}

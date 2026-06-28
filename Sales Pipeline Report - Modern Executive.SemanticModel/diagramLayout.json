@@ -1,0 +1,112 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 360,
+            "y": 236.75
+          },
+          "nodeIndex": "accounts",
+          "nodeLineageTag": "eb934839-71fc-44e0-ac34-412b9523d7a2",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 56.883641347875837,
+            "y": 426.58304816322169
+          },
+          "nodeIndex": "products",
+          "nodeLineageTag": "b3220feb-40c8-4090-8f3b-cf6d526c273e",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 341.1534527574301,
+            "y": 600.03161837683376
+          },
+          "nodeIndex": "sales_pipeline",
+          "nodeLineageTag": "e1b2d26a-8189-4cbf-96f0-44d294f264a3",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 58.46374249642794,
+            "y": 885.04342534411319
+          },
+          "nodeIndex": "sales_teams",
+          "nodeLineageTag": "cc67ab9c-35c3-413f-b4fc-7d1813954a55",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 644,
+            "y": 515.25
+          },
+          "nodeIndex": "dim_date",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 621.63405964874266,
+            "y": 809.65303445656309
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "805a0048-8317-4f1c-a049-066268c9a285",
+          "size": {
+            "height": 290.84485513050117,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 688.05017488378712
+          },
+          "nodeIndex": "dim_user_security",
+          "nodeLineageTag": "6db77002-aca6-472f-b689-f370be2b2de1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 63.287087723234038,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

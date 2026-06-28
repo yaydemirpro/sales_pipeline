@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json",
+  "pageOrder": [
+    "dashboardefad152b265419f0bacf",
+    "pipeline0e5743993754519f0bac",
+    "team790fdd31ebf6f819f0ba",
+    "productdae3095b7758819f0bac"
+  ],
+  "activePageName": "pipeline0e5743993754519f0bac"
+}

@@ -1,0 +1,30 @@
+table dim_user_security
+	lineageTag: 6db77002-aca6-472f-b689-f370be2b2de1
+
+	column UserEmail
+		dataType: string
+		lineageTag: 7137bde0-a3a6-480f-af6a-256158425ff9
+		summarizeBy: none
+		sourceColumn: UserEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_agent
+		dataType: string
+		lineageTag: 50df145b-39cb-4557-aa41-dd89a6a6abc7
+		summarizeBy: none
+		sourceColumn: sales_agent
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_user_security = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WKkktLnFIzs8tSMyr1APSSjpKjnl5iQrBeak5OZl56UqxOtFKKam5+WiKnFOTM3MqFXwScwuyM/PAqooMDQ3MDSwsHUqTc3L0klKBqiJLi0vTFBwrgQZkFinFxgIA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [UserEmail = _t, sales_agent = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"UserEmail", type text}, {"sales_agent", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
