@@ -74,6 +74,22 @@ table _Measures
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 5b108636-df14-466a-8a8e-6ec76cd934ec
 
+	measure 'Product Rank' = ```
+			
+			IF(
+			    NOT(ISBLANK([Total Pipeline Value])),
+			    RANKX(
+			        ALLSELECTED(products[product]), 
+			        [Total Pipeline Value], 
+			        , 
+			        ASC, 
+			        Dense
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 9e731a9c-366d-4800-af64-670e606a6618
+
 	partition _Measures = m
 		mode: import
 		source =

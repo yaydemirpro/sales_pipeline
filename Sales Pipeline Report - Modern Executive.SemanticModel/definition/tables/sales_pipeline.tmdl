@@ -89,9 +89,10 @@ table sales_pipeline
 				let
 				    Source = Csv.Document(File.Contents("C:\Users\jos_m\Desktop\mavenCRM\sales_pipeline.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"opportunity_id", type text}, {"sales_agent", type text}, {"product", type text}, {"account", type text}, {"deal_stage", type text}, {"engage_date", type date}, {"close_date", type date}, {"close_value", Currency.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"opportunity_id", type text}, {"sales_agent", type text}, {"product", type text}, {"account", type text}, {"deal_stage", type text}, {"engage_date", type date}, {"close_date", type date}, {"close_value", Currency.Type}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","GTXPro","GTX Pro",Replacer.ReplaceText,{"product"})
 				in
-				    #"Changed Type"
+				    #"Replaced Value"
 
 	annotation PBI_NavigationStepName = Navigation
 
